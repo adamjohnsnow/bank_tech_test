@@ -27,12 +27,14 @@ class Statement
   private
 
   def enter_deposit(transaction)
-    statement_line = "#{transaction[:date]} || #{transaction[:deposit]} || || #{transaction[:balance]}"
+    statement_line = "#{transaction[:date]} || #{transaction[:deposit]} || " +
+    "|| #{transaction[:balance]}"
     @output << statement_line
   end
 
   def enter_withdrawal(transaction)
-    statement_line = "#{transaction[:date]} || || #{transaction[:withdrawal]} || #{transaction[:balance]}"
+    statement_line = "#{transaction[:date]} || || #{transaction[:withdrawal]}" +
+    " || #{transaction[:balance]}"
     @output << statement_line
   end
 

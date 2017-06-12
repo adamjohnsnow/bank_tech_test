@@ -32,13 +32,15 @@ date || credit || debit || balance
 * Write full unit tests for each function/element of models
 * In order to realise the correct data in the statement, deposits and withdrawals will need to carry a date
 
-#### Functional Representation
-
-Objects  | Messages
-------------- | -------------
-Account  | Withdraw
-Account  | Deposit
-Statement | Print
+#### Installation
+```
+git clone https://github.com/adamjohnsnow/bank_tech_test.git
+cd bank_tech_test
+bundle install
+irb
+2.4.0 :001 > load './lib/account.rb'
+2.4.0 :002 > load './lib/statement.rb'
+```
 
 #### REPL example
 ```
@@ -61,5 +63,3 @@ date || credit || debit || balance
 14/01/2012 || || 500 || 2500
 13/01/2012 || 2000 || || 3000
 10/01/2012 || 1000 || || 1000
- => ["date || credit || debit || balance", ["14/01/2012 || || 500 || 2500", "13/01/2012 || 2000 || || 3000", "10/01/2012 || 1000 || || 1000"]]
- ```
