@@ -13,7 +13,7 @@ describe Account do
 
   it 'stores deposit in transactions' do
     subject.deposit(200, '01/04/2017')
-    expect(subject.transactions).to eq([{ deposit: 200, date: '01/04/2017'}])
+    expect(subject.transactions).to eq([{ deposit: 200, date: '01/04/2017', balance: 200}])
   end
 
   it 'can accept a withdrawal with a date' do
@@ -23,7 +23,7 @@ describe Account do
 
   it 'stores withdrawal in transactions' do
     subject.withdraw(300, '02/05/2017')
-    expect(subject.transactions).to eq([{ withdrawal: 300, date: '02/05/2017'}])
+    expect(subject.transactions).to eq([{ withdrawal: 300, date: '02/05/2017', balance: -300}])
   end
 
 end

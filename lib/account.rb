@@ -22,6 +22,7 @@ private
     transaction = Hash.new 0
     transaction.store(type.to_sym, amount)
     transaction.store(:date, date)
+    transaction.store(:balance, @balance)
     @transactions << transaction
   end
 
