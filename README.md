@@ -39,3 +39,27 @@ Objects  | Messages
 Account  | Withdraw
   | Deposit
 Statement | Print
+
+#### REPL example
+```
+2.4.0 :001 > load './lib/account.rb'
+ => true
+2.4.0 :002 > load './lib/statement.rb'
+ => true
+2.4.0 :003 > account = Account.new
+ => #<Account:0x007fc9680e90a0 @balance=0, @transactions=[]>
+2.4.0 :004 > account.deposit(1000, '10-01-2012')
+ => [{:deposit=>1000, :date=>"10-01-2012", :balance=>1000}]
+2.4.0 :005 >     account.deposit(2000, '13-01-2012')
+ => [{:deposit=>1000, :date=>"10-01-2012", :balance=>1000}, {:deposit=>2000, :date=>"13-01-2012", :balance=>3000}]
+2.4.0 :006 >       account.withdraw(500, '14-01-2012')
+ => [{:deposit=>1000, :date=>"10-01-2012", :balance=>1000}, {:deposit=>2000, :date=>"13-01-2012", :balance=>3000}, {:withdrawal=>500, :date=>"14-01-2012", :balance=>2500}]
+2.4.0 :007 > statement = Statement.new(account.transactions)
+ => #<Statement:0x007fc968092520 @headers="date || credit || debit || balance", @transactions=[{:deposit=>1000, :date=>"10-01-2012", :balance=>1000}, {:deposit=>2000, :date=>"13-01-2012", :balance=>3000}, {:withdrawal=>500, :date=>"14-01-2012", :balance=>2500}], @output=["14-01-2012 || || 500 || 2500", "13-01-2012 || 2000 || || 3000", "10-01-2012 || 1000 || || 1000"]>
+2.4.0 :008 > statement.print_out
+date || credit || debit || balance
+14-01-2012 || || 500 || 2500
+13-01-2012 || 2000 || || 3000
+10-01-2012 || 1000 || || 1000
+ => ["date || credit || debit || balance", ["14-01-2012 || || 500 || 2500", "13-01-2012 || 2000 || || 3000", "10-01-2012 || 1000 || || 1000"]]
+ ```
