@@ -10,32 +10,12 @@ class Statement
 
   def stringify_transactions
     @transactions.reverse.each do |transaction|
-      if transaction.keys[0] == :deposit
-        enter_deposit(transaction)
-      else
-        enter_withdrawal(transaction)
-      end
+      @output << transaction.print
     end
   end
 
   def print_out
     to_print = [@headers, @output]
     puts to_print
-    return to_print
   end
-
-  private
-
-  def enter_deposit(transaction)
-    statement_line = "#{transaction[:date]} || #{transaction[:deposit]} || " +
-    "|| #{transaction[:balance]}"
-    @output << statement_line
-  end
-
-  def enter_withdrawal(transaction)
-    statement_line = "#{transaction[:date]} || || #{transaction[:withdrawal]}" +
-    " || #{transaction[:balance]}"
-    @output << statement_line
-  end
-
 end
