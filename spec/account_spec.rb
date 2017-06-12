@@ -1,39 +1,28 @@
 require 'account'
 
 describe Account do
+  let(:log) { double transaction_log: []}
+  let(:account) { Account.new(log)}
+  before{ allow(log).to receive(:record) }
 
   it 'has a balance of zero' do
-    expect(subject.balance).to be_zero
+    expect(account.balance).to be_zero
   end
 
   it 'can accept a deposit with a date' do
-    subject.deposit(200, '01/04/2017')
-    expect(subject.balance).to eq(200)
+    account.deposit(200, '01/04/2017')
+    expect(account.balance).to eq(200)
   end
 
-  it 'stores deposit in transactions' do
-    subject.deposit(200, '01/04/2017')
-    expect(subject.transactions).to eq [
-      { deposit: 200, date: '01/04/2017', balance: 200 }
-    ]
-  end
 
   it 'balance updates for two deposits' do
-    subject.deposit(200, '01/04/2017')
-    subject.deposit(500, '01/04/2017')
-    expect(subject.balance).to eq(700)
+    account.deposit(200, '01/04/2017')
+    account.deposit(500, '01/04/2017')
+    expect(account.balance).to eq(700)
   end
 
   it 'can accept a withdrawal with a date' do
-    subject.withdraw(300, '02/05/2017')
-    expect(subject.balance).to eq(-300)
+    account.withdraw(300, '02/05/2017')
+    expect(account.balance).to eq(-300)
   end
-
-  it 'stores withdrawal in transactions' do
-    subject.withdraw(300, '02/05/2017')
-    expect(subject.transactions).to eq [
-      { withdrawal: 300, date: '02/05/2017', balance: -300 }
-      ]
-  end
-
 end

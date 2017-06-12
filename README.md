@@ -27,8 +27,9 @@ date || credit || debit || balance
 ### My Approach
 
 **Using Ruby:**
-* A model for an Account which manages transactions
-* A model for Statement which prints all transactions
+* A class for an Account which manages transactions
+* A class for a Transactions log
+* A class for Statement which prints all transactions
 * Write full unit tests for each function/element of models
 * In order to realise the correct data in the statement, deposits and withdrawals will need to carry a date
 
@@ -44,22 +45,29 @@ irb
 
 #### REPL example
 ```
-2.4.0 :001 > load './lib/account.rb'
- => true
-2.4.0 :002 > load './lib/statement.rb'
- => true
-2.4.0 :003 > account = Account.new
- => #<Account:0x007fc9680e90a0 @balance=0, @transactions=[]>
-2.4.0 :004 > account.deposit(1000, '10/01/2012')
- => [{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}]
-2.4.0 :005 >     account.deposit(2000, '13/01/2012')
- => [{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}, {:deposit=>2000, :date=>"13/01/2012", :balance=>3000}]
-2.4.0 :006 >       account.withdraw(500, '14/01/2012')
- => [{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}, {:deposit=>2000, :date=>"13/01/2012", :balance=>3000}, {:withdrawal=>500, :date=>"14/01/2012", :balance=>2500}]
-2.4.0 :007 > statement = Statement.new(account.transactions)
- => #<Statement:0x007fc968092520 @headers="date || credit || debit || balance", @transactions=[{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}, {:deposit=>2000, :date=>"13/01/2012", :balance=>3000}, {:withdrawal=>500, :date=>"14/01/2012", :balance=>2500}], @output=["14/01/2012 || || 500 || 2500", "13/01/2012 || 2000 || || 3000", "10/01/2012 || 1000 || || 1000"]>
-2.4.0 :008 > statement.print_out
+[2] pry(main)> load './lib/account.rb'
+=> true
+[3] pry(main)> load './lib/statement.rb'
+=> true
+[4] pry(main)> account = Account.new
+=> #<Account:0x007f92b5825628 @balance=0, @transaction_log=#<TransactionLog:0x007f92b5825600 @history=[]>>
+[5] pry(main)> account.deposit(1000, '10/01/2012')
+=> [{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}]
+[6] pry(main)> account.balance
+=> 1000
+[7] pry(main)> account.deposit(2000, '13/01/2012')    
+=> [{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}, {:deposit=>2000, :date=>"13/01/2012", :balance=>3000}]
+[8] pry(main)> account.withdraw(500, '14/01/2012')    
+=> [{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}, {:deposit=>2000, :date=>"13/01/2012", :balance=>3000}, {:withdrawal=>500, :date=>"14/01/2012", :balance=>2500}]
+[9] pry(main)> statement = Statement.new(account.transaction_log)
+=> #<Statement:0x007f92b70136e0
+ @headers="date || credit || debit || balance",
+ @output=["14/01/2012 || || 500 || 2500", "13/01/2012 || 2000 || || 3000", "10/01/2012 || 1000 || || 1000"],
+ @transactions=[{:deposit=>1000, :date=>"10/01/2012", :balance=>1000}, {:deposit=>2000, :date=>"13/01/2012", :balance=>3000}, {:withdrawal=>500, :date=>"14/01/2012", :balance=>2500}]>
+[10] pry(main)> statement.print_out
 date || credit || debit || balance
 14/01/2012 || || 500 || 2500
 13/01/2012 || 2000 || || 3000
 10/01/2012 || 1000 || || 1000
+=> ["date || credit || debit || balance", ["14/01/2012 || || 500 || 2500", "13/01/2012 || 2000 || || 3000", "10/01/2012 || 1000 || || 1000"]]
+```

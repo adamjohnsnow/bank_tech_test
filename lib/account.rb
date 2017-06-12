@@ -1,29 +1,19 @@
 class Account
-  attr_reader :transactions, :balance
+  require_relative './transaction_log'
+  attr_reader :transaction_log, :balance
 
-  def initialize
+  def initialize(transaction_log = TransactionLog.new)
     @balance = 0
-    @transactions = []
+    @transaction_log = transaction_log
   end
 
   def deposit(amount, date)
     @balance += amount
-    add_to_transactions(:deposit, amount, date)
+    transaction_log.record(:deposit, amount, date, @balance)
   end
 
   def withdraw(amount, date)
     @balance -= amount
-    add_to_transactions(:withdrawal, amount, date)
+    transaction_log.record(:withdrawal, amount, date, @balance)
   end
-
-private
-
-  def add_to_transactions(type, amount, date)
-    transaction = Hash.new 0
-    transaction.store(type.to_sym, amount)
-    transaction.store(:date, date)
-    transaction.store(:balance, @balance)
-    @transactions << transaction
-  end
-
 end

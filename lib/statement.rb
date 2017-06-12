@@ -3,7 +3,7 @@ class Statement
 
   def initialize(transactions)
     @headers = 'date || credit || debit || balance'
-    @transactions = transactions
+    @transactions = transactions.history
     @output = []
     stringify_transactions
   end
