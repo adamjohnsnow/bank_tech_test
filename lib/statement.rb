@@ -9,13 +9,19 @@ class Statement
   end
 
   def stringify_transactions
-    @transactions.each do |transaction|
+    @transactions.reverse.each do |transaction|
       if transaction.keys[0] == :deposit
         enter_deposit(transaction)
       else
         enter_withdrawal(transaction)
       end
     end
+  end
+
+  def print_out
+    to_print = [@headers, @output]
+    puts to_print
+    return to_print
   end
 
   private

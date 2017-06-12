@@ -19,10 +19,18 @@ describe Statement do
       ])
   end
 
-  it 'converts array of transactions to array of strings' do
+  it 'converts array of transactions to reversed array of strings' do
     expect(statement.output).to eq([
-      '01/04/2017 || 200 || || 200',
-      '02/05/2017 || || 150 || 50'
+      '02/05/2017 || || 150 || 50',
+      '01/04/2017 || 200 || || 200'
+      ])
+  end
+
+  it 'prints full statement' do
+    expect(statement.print_out).to eq([
+      'date || credit || debit || balance',
+      ['02/05/2017 || || 150 || 50',
+      '01/04/2017 || 200 || || 200']
       ])
   end
 end
